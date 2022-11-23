@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
   res.send('Hey this is my API running 🥳')
 })
 
-app.get('/toshow', function (req, res){res.sendFile(path.resolve('src/app/index.html'));})
+app.get('/toshow', function (req, res){res.sendFile(path.resolve('toShow.html'));})
 
 app.get('/about', (req, res) => {
   res.send('This is my about route..... ')
