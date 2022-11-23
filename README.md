@@ -1,1 +1,0 @@
-# SingPass-QR-App
