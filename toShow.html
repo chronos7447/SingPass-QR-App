@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://*.singpass.gov.sg; connect-src 'self' https://*.singpass.gov.sg; style-src 'self' https://*.singpass.gov.sg; img-src 'self' https://*.singpass.gov.sg data:; font-src https://fonts.gstatic.com;">
+  </head>
+  <script src=https://stg-id.singpass.gov.sg/static/ndi_embedded_auth.js></script>
+  <script>
+    async function init() {
+      const authParamsSupplier = async () => {
+        // Replace the below with an `await`ed call to initiate an auth session on your backend
+        // which will generate state+nonce values, e.g
+        return { state: "dummySessionState", nonce: "dummySessionNonce" };
+      };
+
+      const onError = (errorId, message) => {
+        console.log(`onError. errorId:${errorId} message:${message}`);
+      };
+
+      const initAuthSessionResponse = window.NDI.initAuthSession(
+        'ndi-qr',
+        {
+      clientId: 'StsgUMiFvKTbejrbCuuvuIpERJNkp71u', // Replace with your client ID
+          redirectUri: 'https://devauth3.customerpltfm.aig.com/oauth2/v1/authorize/callback',        // Replace with a registered redirect URI
+          scope: 'openid',
+          responseType: 'code'
+        },
+        authParamsSupplier,
+        onError
+      );
+
+      console.log('initAuthSession: ', initAuthSessionResponse);
+    }
+  </script>
+  <body onload="init()">
+    <div id="ndi-qr"></div>
+  </body>
+</html>
