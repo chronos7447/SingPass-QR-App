@@ -1,3 +1,4 @@
+// index.js
 const express = require('express')
 
 const app = express()
@@ -7,7 +8,11 @@ app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT} `)
 })
 
-app.get('/', function (req, res){res.sendFile('toShow.html')});
+app.get('/', (req, res) => {
+  res.send('Hey this is my API running 🥳')
+})
+
+app.get('/toshow', function (req, res){res.sendFile('toShow.html')})
 
 app.get('/about', (req, res) => {
   res.send('This is my about route..... ')
