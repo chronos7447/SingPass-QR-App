@@ -1,38 +1,196 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://*.singpass.gov.sg; connect-src 'self' https://*.singpass.gov.sg; style-src 'self' https://*.singpass.gov.sg; img-src 'self' https://*.singpass.gov.sg data:; font-src https://fonts.gstatic.com;">
-  </head>
-  <script src=https://stg-id.singpass.gov.sg/static/ndi_embedded_auth.js></script>
-  <script>
-    async function init() {
-      const authParamsSupplier = async () => {
-        // Replace the below with an `await`ed call to initiate an auth session on your backend
-        // which will generate state+nonce values, e.g
-        return { state: "dummySessionState", nonce: "dummySessionNonce" };
-      };
-
-      const onError = (errorId, message) => {
-        console.log(`onError. errorId:${errorId} message:${message}`);
-      };
-
-      const initAuthSessionResponse = window.NDI.initAuthSession(
-        'ndi-qr',
-        {
-      clientId: 'StsgUMiFvKTbejrbCuuvuIpERJNkp71u', // Replace with your client ID
-          redirectUri: 'https://devauth3.customerpltfm.aig.com/oauth2/v1/authorize/callback',        // Replace with a registered redirect URI
-          scope: 'openid',
-          responseType: 'code'
-        },
-        authParamsSupplier,
-        onError
-      );
-
-      console.log('initAuthSession: ', initAuthSessionResponse);
+<script src="https://stg-id.singpass.gov.sg/static/ndi_embedded_auth.js"></script>
+<script type="text/javascript"  src="/apac/html/login/js/runtime.js"></script>
+<script type="text/javascript" src="/apac/html/login/js/polyfill.min.js"></script>
+<script type="text/javascript" src="/apac/html/login/js/fetch.js"></script>
+<script type="text/javascript">
+<!--Start Singpass chnage for Singapore-->
+/*Below JS code generated via Babel build to add compatability for asyc function call to singpass service from IE11 browser
+ Code build tool https://babeljs.io/repl/
+JS to be included to make the call
+    https://cdn.jsdelivr.net/npm/babel-regenerator-runtime@6.5.0/runtime.js:
+    https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js: 
+    https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js:*/
+	
+"use strict";
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function init() {
+  return _init.apply(this, arguments);
+}
+function _init() {
+  _init = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+    var nonceVar, sm_index, temp, stateTmp, stateVar, obj, authParamsSupplier, onError, OIDCParams, initAuthSessionResponse;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            nonceVar = generateString();
+            sm_index = '33554433';
+            temp = nonceVar + '|' + sm_index;
+            stateTmp = Base64.encode(temp);
+            stateVar = stateTmp.split('=').join('');
+            obj = '';
+            authParamsSupplier = /*#__PURE__*/function () {
+              var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                return regeneratorRuntime.wrap(function _callee$(_context) {
+                  while (1) {
+                    switch (_context.prev = _context.next) {
+                      case 0:
+                        return _context.abrupt("return", {
+                          state: '' + stateVar,
+                          nonce: '' + nonceVar.trim()
+                        });
+                      case 1:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }
+                }, _callee);
+              }));
+              return function authParamsSupplier() {
+                return _ref.apply(this, arguments);
+              };
+            }();
+            onError = function onError(errorId, message) {
+              console.log("onError. errorId:".concat(errorId, " message:").concat(message));
+            };
+            OIDCParams = {
+              nonce: obj.nonce || '' + nonceVar.trim(),
+              state: obj.state || '' + stateVar,
+              clientId: obj.client_id || 'StsgUMiFvKTbejrbCuuvuIpERJNkp71u',
+              redirectUri: obj.redirect_uri || 'https://idpm.aig.com:2443/auth/openid/connect/tokenservlet',
+              scope: obj.scope || 'openid',
+              responseType: obj.response_type || 'code'
+            };
+            initAuthSessionResponse = window.NDI.initAuthSession('ndi-qr', OIDCParams, authParamsSupplier, onError);
+            console.log('initAuthSession: ', initAuthSessionResponse);
+          case 11:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _init.apply(this, arguments);
+}
+<!--End Singpass chnage for Singapore-->
+function generateString() {
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var result = ' ';
+  var charactersLength = characters.length;
+  for (var i = 0; i < 15; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+var Base64 = {
+// private property
+_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+// public method for encoding
+encode : function (input) {
+    var output = "";
+    var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+    var i = 0;
+    input = Base64._utf8_encode(input);
+    while (i < input.length) {
+        chr1 = input.charCodeAt(i++);
+        chr2 = input.charCodeAt(i++);
+        chr3 = input.charCodeAt(i++);
+        enc1 = chr1 >> 2;
+        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+        enc4 = chr3 & 63;
+        if (isNaN(chr2)) {
+            enc3 = enc4 = 64;
+        } else if (isNaN(chr3)) {
+            enc4 = 64;
+        }
+        output = output +
+        this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) +
+        this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
     }
-  </script>
-  <body onload="init()">
-    <div id="ndi-qr"></div>
-  </body>
+    return output;
+},
+// public method for decoding
+decode : function (input) {
+    var output = "";
+    var chr1, chr2, chr3;
+    var enc1, enc2, enc3, enc4;
+    var i = 0;
+    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+    while (i < input.length) {
+        enc1 = this._keyStr.indexOf(input.charAt(i++));
+        enc2 = this._keyStr.indexOf(input.charAt(i++));
+        enc3 = this._keyStr.indexOf(input.charAt(i++));
+        enc4 = this._keyStr.indexOf(input.charAt(i++));
+        chr1 = (enc1 << 2) | (enc2 >> 4);
+        chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+        chr3 = ((enc3 & 3) << 6) | enc4;
+        output = output + String.fromCharCode(chr1);
+        if (enc3 != 64) {
+            output = output + String.fromCharCode(chr2);
+        }
+        if (enc4 != 64) {
+            output = output + String.fromCharCode(chr3);
+        }
+    }
+    output = Base64._utf8_decode(output);
+    return output;
+},
+// private method for UTF-8 encoding
+_utf8_encode : function (string) {
+    string = string.replace(/\r\n/g,"\n");
+    var utftext = "";
+    for (var n = 0; n < string.length; n++) {
+        var c = string.charCodeAt(n);
+        if (c < 128) {
+            utftext += String.fromCharCode(c);
+        }
+        else if((c > 127) && (c < 2048)) {
+            utftext += String.fromCharCode((c >> 6) | 192);
+            utftext += String.fromCharCode((c & 63) | 128);
+        }
+        else {
+            utftext += String.fromCharCode((c >> 12) | 224);
+            utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+            utftext += String.fromCharCode((c & 63) | 128);
+        }
+    }
+    return utftext;
+},
+// private method for UTF-8 decoding
+_utf8_decode : function (utftext) {
+    var string = "";
+    var i = 0;
+    var c = c1 = c2 = 0;
+    while ( i < utftext.length ) {
+        c = utftext.charCodeAt(i);
+        if (c < 128) {
+            string += String.fromCharCode(c);
+            i++;
+        }
+        else if((c > 191) && (c < 224)) {
+            c2 = utftext.charCodeAt(i+1);
+            string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+            i += 2;
+        }
+        else {
+            c2 = utftext.charCodeAt(i+1);
+            c3 = utftext.charCodeAt(i+2);
+            string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+            i += 3;
+        }
+    }
+    return string;
+}
+}
+  
+</script>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+</head>
+<body onload="init()">
+	<div id="ndi-qr"></div>
+</body>
 </html>
