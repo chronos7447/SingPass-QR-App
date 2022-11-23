@@ -14,6 +14,10 @@ app.get('/', (req, res) => {
 
 app.get('/toshow', function (req, res){res.sendFile(path.resolve('toShow.html'));})
 
+app.get('/check',function(req,res){
+  res.sendFile(path.join(__dirname+'/toShow.html'));
+});
+
 app.get('/about', (req, res) => {
   res.send('This is my about route..... ')
 })
